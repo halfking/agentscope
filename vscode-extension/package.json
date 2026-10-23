@@ -1,0 +1,382 @@
+{
+  "name": "agentscope-multi-agent-workflow",
+  "displayName": "AgentScope Multi-Agent Workflow",
+  "description": "A comprehensive multi-agent programming workflow system powered by AgentScope with real Augment integration",
+  "version": "2.0.0",
+  "publisher": "agentscope",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Programming Languages",
+    "Linters"
+  ],
+  "keywords": [
+    "agentscope",
+    "multi-agent",
+    "ai",
+    "code-analysis",
+    "quality-check",
+    "augment",
+    "security",
+    "workflow"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:agentscope.enableAugmentIntegration"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agentscope.startAgentSystem",
+        "title": "Start Agent System",
+        "category": "AgentScope",
+        "icon": "$(play)"
+      },
+      {
+        "command": "agentscope.stopAgentSystem",
+        "title": "Stop Agent System",
+        "category": "AgentScope",
+        "icon": "$(stop)"
+      },
+      {
+        "command": "agentscope.analyzeProject",
+        "title": "Analyze Project",
+        "category": "AgentScope",
+        "icon": "$(folder-library)"
+      },
+      {
+        "command": "agentscope.qualityCheck",
+        "title": "Quality Check",
+        "category": "AgentScope",
+        "icon": "$(checklist)"
+      },
+      {
+        "command": "agentscope.securityScan",
+        "title": "Security Scan",
+        "category": "AgentScope",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "agentscope.showDashboard",
+        "title": "Show Agent Dashboard",
+        "category": "AgentScope",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "agentscope.configureAgents",
+        "title": "Configure Agents",
+        "category": "AgentScope",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "agentscope.viewTaskHistory",
+        "title": "View Task History",
+        "category": "AgentScope",
+        "icon": "$(history)"
+      },
+      {
+        "command": "agentscope.enableAugmentIntegration",
+        "title": "Enable Augment Integration",
+        "category": "AgentScope",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "agentscope.disableAugmentIntegration",
+        "title": "Disable Augment Integration",
+        "category": "AgentScope",
+        "icon": "$(unplug)"
+      },
+      {
+        "command": "agentscope.detectAugmentActivity",
+        "title": "Detect Augment Activity",
+        "category": "AgentScope",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "agentscope.showAugmentStatus",
+        "title": "Show Augment Status",
+        "category": "AgentScope",
+        "icon": "$(info)"
+      },
+      {
+        "command": "agentscope.processAugmentCommand",
+        "title": "Process Augment Command",
+        "category": "AgentScope",
+        "icon": "$(terminal)"
+      }
+    ],
+    "views": {
+      "agentscope-explorer": [
+        {
+          "id": "agentscope.agentStatus",
+          "name": "Agent Status",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "id": "agentscope.taskQueue",
+          "name": "Task Queue",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "id": "agentscope.results",
+          "name": "Analysis Results",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "id": "agentscope.augmentStatus",
+          "name": "Augment Integration",
+          "when": "agentscope.augmentEnabled"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "agentscope-explorer",
+          "title": "AgentScope",
+          "icon": "$(robot)"
+        }
+      ]
+    },
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "agentscope.analyzeProject",
+          "when": "explorerResourceIsFolder",
+          "group": "agentscope@1"
+        },
+        {
+          "command": "agentscope.qualityCheck",
+          "when": "resourceExtname =~ /\\.(py|js|ts|java|cpp|c|cs)$/",
+          "group": "agentscope@2"
+        },
+        {
+          "command": "agentscope.securityScan",
+          "when": "resourceExtname =~ /\\.(py|js|ts|java|cpp|c|cs)$/",
+          "group": "agentscope@3"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "agentscope.qualityCheck",
+          "when": "resourceExtname =~ /\\.(py|js|ts|java|cpp|c|cs)$/",
+          "group": "agentscope@1"
+        },
+        {
+          "command": "agentscope.securityScan",
+          "when": "resourceExtname =~ /\\.(py|js|ts|java|cpp|c|cs)$/",
+          "group": "agentscope@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "agentscope.startAgentSystem",
+          "when": "!agentscope.systemActive"
+        },
+        {
+          "command": "agentscope.stopAgentSystem",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "command": "agentscope.analyzeProject",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "command": "agentscope.qualityCheck",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "command": "agentscope.securityScan",
+          "when": "agentscope.systemActive"
+        },
+        {
+          "command": "agentscope.enableAugmentIntegration",
+          "when": "!agentscope.augmentEnabled"
+        },
+        {
+          "command": "agentscope.disableAugmentIntegration",
+          "when": "agentscope.augmentEnabled"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AgentScope Multi-Agent Workflow",
+      "properties": {
+        "agentscope.backend.host": {
+          "type": "string",
+          "default": "localhost",
+          "description": "AgentScope backend host"
+        },
+        "agentscope.backend.port": {
+          "type": "number",
+          "default": 8000,
+          "description": "AgentScope backend port"
+        },
+        "agentscope.backend.protocol": {
+          "type": "string",
+          "enum": ["http", "https"],
+          "default": "http",
+          "description": "Backend protocol"
+        },
+        "agentscope.websocket.port": {
+          "type": "number",
+          "default": 8001,
+          "description": "WebSocket port for real-time communication"
+        },
+        "agentscope.agents.codeManager.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Code Manager Agent"
+        },
+        "agentscope.agents.complianceAuditor.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Compliance Auditor Agent"
+        },
+        "agentscope.agents.systemArchitect.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable System Architect Agent"
+        },
+        "agentscope.llm.provider": {
+          "type": "string",
+          "enum": ["siliconflow", "openai", "anthropic", "dashscope"],
+          "default": "siliconflow",
+          "description": "Default LLM provider"
+        },
+        "agentscope.llm.model": {
+          "type": "string",
+          "default": "deepseek-ai/deepseek-coder",
+          "description": "Default LLM model"
+        },
+        "agentscope.analysis.autoRun": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically run analysis on file changes"
+        },
+        "agentscope.analysis.excludePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["node_modules/**", "**/*.min.js", "**/__pycache__/**", "**/venv/**", "**/env/**", "**/.git/**", "**/dist/**", "**/build/**"],
+          "description": "File patterns to exclude from analysis"
+        },
+        "agentscope.augment.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Augment integration"
+        },
+        "agentscope.augment.realTimeMonitoring": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable real-time Augment activity monitoring"
+        },
+        "agentscope.augment.nlpConfidenceThreshold": {
+          "type": "number",
+          "default": 0.7,
+          "minimum": 0.1,
+          "maximum": 1.0,
+          "description": "Natural language processing confidence threshold"
+        },
+        "agentscope.features.optimizedAgents": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use optimized AgentScope agents"
+        },
+        "agentscope.features.agentscopeWorkflows": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use AgentScope workflow management"
+        },
+        "agentscope.features.realAugmentIntegration": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable real Augment integration"
+        },
+        "agentscope.notifications.level": {
+          "type": "string",
+          "enum": ["error", "warning", "info", "debug"],
+          "default": "info",
+          "description": "Notification level"
+        },
+        "agentscope.dashboard.autoOpen": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically open dashboard when system starts"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "agentscope.showDashboard",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a"
+      },
+      {
+        "command": "agentscope.analyzeProject",
+        "key": "ctrl+shift+p",
+        "mac": "cmd+shift+p",
+        "when": "agentscope.systemActive"
+      },
+      {
+        "command": "agentscope.qualityCheck",
+        "key": "ctrl+shift+q",
+        "mac": "cmd+shift+q",
+        "when": "agentscope.systemActive && editorTextFocus"
+      },
+      {
+        "command": "agentscope.securityScan",
+        "key": "ctrl+shift+s",
+        "mac": "cmd+shift+s",
+        "when": "agentscope.systemActive && editorTextFocus"
+      },
+      {
+        "command": "agentscope.enableAugmentIntegration",
+        "key": "ctrl+shift+u",
+        "mac": "cmd+shift+u",
+        "when": "!agentscope.augmentEnabled"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "@types/node": "16.x",
+    "@types/ws": "^8.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "typescript": "^4.7.4",
+    "vsce": "^2.15.0",
+    "@vscode/test-electron": "^2.2.0"
+  },
+  "dependencies": {
+    "ws": "^8.13.0",
+    "axios": "^1.4.0",
+    "uuid": "^9.0.0",
+    "dotenv": "^16.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agentscope/agentscope-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/agentscope/agentscope-vscode/issues"
+  },
+  "homepage": "https://github.com/agentscope/agentscope-vscode#readme",
+  "license": "MIT"
+}

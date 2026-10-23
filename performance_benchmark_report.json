@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-09-06T15:59:48.105140",
+  "results": {
+    "single_task": {
+      "avg_execution_time": 0.10076777935028076,
+      "p95_execution_time": 0.10076777935028076,
+      "min_execution_time": 0.1003570556640625,
+      "max_execution_time": 0.10118794441223145,
+      "success_rate": 1.0,
+      "throughput": 9.923807058642042,
+      "operation_count": 10
+    },
+    "concurrent_task": {
+      "avg_execution_time": 0.1,
+      "p95_execution_time": 0.1,
+      "min_execution_time": 0.1,
+      "max_execution_time": 0.1,
+      "success_rate": 1.0,
+      "throughput": 98.90616857162395,
+      "operation_count": 10
+    },
+    "workflow_management": {
+      "avg_execution_time": 0.3025365352630615,
+      "p95_execution_time": 0.3025365352630615,
+      "min_execution_time": 0.30198192596435547,
+      "max_execution_time": 0.3030259609222412,
+      "success_rate": 1.0,
+      "throughput": 3.3053859069632043,
+      "operation_count": 5
+    },
+    "augment_integration": {
+      "avg_execution_time": 0.2070765972137451,
+      "p95_execution_time": 0.2070765972137451,
+      "min_execution_time": 0.2070765972137451,
+      "max_execution_time": 0.2070765972137451,
+      "success_rate": 1.0,
+      "throughput": 4.829130927662467,
+      "operation_count": 20
+    },
+    "memory_efficiency": {
+      "avg_execution_time": 0.0003161430358886719,
+      "p95_execution_time": 0.0003161430358886719,
+      "min_execution_time": 0.0003161430358886719,
+      "max_execution_time": 0.0003161430358886719,
+      "success_rate": 1.0,
+      "throughput": 632625.0377073906,
+      "operation_count": 1
+    }
+  }
+}

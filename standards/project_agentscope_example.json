@@ -1,0 +1,260 @@
+{
+  "metadata": {
+    "project_name": "agentscope_example",
+    "version": "1.0.0",
+    "created_date": "2024-01-01T00:00:00Z",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "base_template": "default",
+    "description": "AgentScope项目特定代码审核标准",
+    "team": "AgentScope Development Team",
+    "contact": "dev@agentscope.com"
+  },
+  
+  "language_overrides": {
+    "python": {
+      "standards": {
+        "code_style": {
+          "max_line_length": {
+            "value": 100,
+            "severity": "warning",
+            "description": "项目特定：单行代码最大长度为100字符"
+          },
+          "import_style": {
+            "group_order": ["standard", "third_party", "local"],
+            "sort_within_group": true,
+            "severity": "info",
+            "description": "导入语句分组和排序规范"
+          }
+        },
+        "naming_conventions": {
+          "agent_classes": {
+            "pattern": "^[A-Z][a-zA-Z0-9]*Agent$",
+            "severity": "error",
+            "description": "智能体类名必须以Agent结尾",
+            "examples": ["CodeManagerAgent", "ComplianceAuditorAgent"]
+          },
+          "task_types": {
+            "pattern": "^[A-Z][A-Z0-9_]*$",
+            "severity": "error",
+            "description": "任务类型使用大写字母和下划线",
+            "examples": ["CODE_ANALYSIS", "QUALITY_CHECK"]
+          },
+          "mcp_tools": {
+            "pattern": "^[a-z][a-z0-9_]*_tool$",
+            "severity": "warning",
+            "description": "MCP工具函数名必须以_tool结尾"
+          }
+        },
+        "documentation": {
+          "agent_docstrings": {
+            "required_sections": ["Args", "Returns", "Raises", "Example"],
+            "severity": "error",
+            "description": "智能体方法必须包含完整的文档字符串"
+          },
+          "type_hints": {
+            "required": true,
+            "severity": "error",
+            "description": "所有公共方法必须包含类型提示"
+          }
+        },
+        "agentscope_specific": {
+          "async_methods": {
+            "required_for_agents": true,
+            "severity": "error",
+            "description": "智能体的主要方法必须是异步的"
+          },
+          "error_handling": {
+            "use_agentscope_exceptions": true,
+            "severity": "warning",
+            "description": "优先使用AgentScope定义的异常类型"
+          },
+          "logging": {
+            "use_agent_logger": true,
+            "severity": "warning",
+            "description": "使用智能体内置的日志记录器"
+          }
+        }
+      }
+    },
+    
+    "typescript": {
+      "standards": {
+        "vscode_extension": {
+          "command_naming": {
+            "pattern": "^agentscope\\.[a-z][a-zA-Z0-9]*$",
+            "severity": "error",
+            "description": "VS Code命令必须以agentscope.开头"
+          },
+          "configuration_keys": {
+            "pattern": "^agentscope\\.[a-z][a-zA-Z0-9\\.]*$",
+            "severity": "error",
+            "description": "配置键必须以agentscope.开头"
+          },
+          "event_handling": {
+            "async_handlers": true,
+            "severity": "warning",
+            "description": "事件处理器应该是异步的"
+          }
+        },
+        "ui_components": {
+          "component_naming": {
+            "pattern": "^[A-Z][a-zA-Z0-9]*Component$",
+            "severity": "warning",
+            "description": "UI组件名必须以Component结尾"
+          },
+          "props_interface": {
+            "pattern": "^I[A-Z][a-zA-Z0-9]*Props$",
+            "severity": "warning",
+            "description": "Props接口名必须以I开头，Props结尾"
+          }
+        }
+      }
+    }
+  },
+  
+  "project_rules": {
+    "file_organization": {
+      "agent_files": {
+        "location": "agentscope_integration/agents/",
+        "pattern": "*_agent.py",
+        "severity": "error",
+        "description": "智能体文件必须放在agents目录下"
+      },
+      "test_files": {
+        "location": "tests/",
+        "pattern": "test_*.py",
+        "severity": "error",
+        "description": "测试文件必须放在tests目录下，以test_开头"
+      },
+      "config_files": {
+        "location": "config/",
+        "pattern": "*.json",
+        "severity": "warning",
+        "description": "配置文件应该放在config目录下"
+      }
+    },
+    
+    "architecture_rules": {
+      "agent_inheritance": {
+        "base_class": "BaseSpecializedAgent",
+        "severity": "error",
+        "description": "所有智能体必须继承自BaseSpecializedAgent"
+      },
+      "interface_implementation": {
+        "required_interfaces": ["ISpecializedAgent"],
+        "severity": "error",
+        "description": "智能体必须实现指定的接口"
+      },
+      "dependency_injection": {
+        "use_constructor_injection": true,
+        "severity": "warning",
+        "description": "优先使用构造函数注入依赖"
+      }
+    },
+    
+    "testing_requirements": {
+      "test_coverage": {
+        "minimum_percentage": 80,
+        "severity": "warning",
+        "description": "测试覆盖率不应低于80%"
+      },
+      "agent_testing": {
+        "require_unit_tests": true,
+        "require_integration_tests": true,
+        "severity": "error",
+        "description": "每个智能体都必须有单元测试和集成测试"
+      },
+      "mock_usage": {
+        "mock_external_services": true,
+        "severity": "warning",
+        "description": "测试中应该模拟外部服务"
+      }
+    },
+    
+    "security_requirements": {
+      "api_key_handling": {
+        "use_environment_variables": true,
+        "severity": "critical",
+        "description": "API密钥必须通过环境变量传递"
+      },
+      "input_validation": {
+        "validate_all_inputs": true,
+        "severity": "error",
+        "description": "所有用户输入都必须进行验证"
+      },
+      "sandbox_execution": {
+        "isolate_code_execution": true,
+        "severity": "error",
+        "description": "代码执行必须在沙箱环境中进行"
+      }
+    }
+  },
+  
+  "team_preferences": {
+    "review_settings": {
+      "review_threshold": "warning",
+      "auto_fix_enabled": false,
+      "require_approval": true,
+      "block_merge_on_critical": true,
+      "block_merge_on_error": true
+    },
+    
+    "notification_settings": {
+      "notification_level": "error",
+      "email_notifications": true,
+      "slack_integration": false,
+      "daily_summary": true
+    },
+    
+    "workflow_settings": {
+      "auto_assign_reviewers": true,
+      "require_tests": true,
+      "require_documentation": true,
+      "enforce_branch_naming": true
+    }
+  },
+  
+  "custom_checks": {
+    "agentscope_imports": {
+      "description": "检查AgentScope导入规范",
+      "pattern": "from agentscope\\.",
+      "severity": "info",
+      "message": "使用正确的AgentScope导入方式"
+    },
+    
+    "async_await_usage": {
+      "description": "检查异步方法的正确使用",
+      "pattern": "async def.*(?!await)",
+      "severity": "warning",
+      "message": "异步方法应该包含await调用"
+    },
+    
+    "error_handling": {
+      "description": "检查错误处理",
+      "pattern": "except.*:",
+      "severity": "info",
+      "message": "确保异常处理包含适当的日志记录"
+    }
+  },
+  
+  "integration_settings": {
+    "git_hooks": {
+      "pre_commit": true,
+      "pre_push": true,
+      "commit_msg": true
+    },
+    
+    "ci_cd": {
+      "run_on_pr": true,
+      "run_on_push": true,
+      "fail_on_error": true,
+      "generate_reports": true
+    },
+    
+    "ide_integration": {
+      "vscode_settings": true,
+      "pylint_config": true,
+      "mypy_config": true
+    }
+  }
+}

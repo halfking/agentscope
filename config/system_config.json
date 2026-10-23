@@ -1,0 +1,280 @@
+{
+  "project_name": "AgentScope Multi-Agent Workflow",
+  "version": "1.0.0",
+  "debug": false,
+  "log_level": "INFO",
+  "backend_host": "localhost",
+  "backend_port": 8000,
+  "websocket_port": 8001,
+  
+  "llm_providers": {
+    "openai": {
+      "name": "openai",
+      "api_key": "${OPENAI_API_KEY}",
+      "model": "gpt-4",
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": true,
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "tokens_per_minute": 90000
+      }
+    },
+    "anthropic": {
+      "name": "anthropic",
+      "api_key": "${ANTHROPIC_API_KEY}",
+      "model": "claude-3-sonnet-20240229",
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": false,
+      "rate_limit": {
+        "requests_per_minute": 50,
+        "tokens_per_minute": 80000
+      }
+    },
+    "siliconflow": {
+      "name": "siliconflow",
+      "api_key": "${SILICONFLOW_API_KEY}",
+      "model": "deepseek-ai/deepseek-coder",
+      "base_url": "https://api.siliconflow.cn/v1",
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": true,
+      "timeout": 30,
+      "retry_attempts": 3,
+      "rate_limit": {
+        "requests_per_minute": 100,
+        "tokens_per_minute": 120000
+      }
+    },
+    "dashscope": {
+      "name": "dashscope",
+      "api_key": "${DASHSCOPE_API_KEY}",
+      "model": "qwen-max",
+      "max_tokens": 4096,
+      "temperature": 0.1,
+      "enabled": false,
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "tokens_per_minute": 100000
+      }
+    }
+  },
+  
+  "agents": {
+    "code_manager": {
+      "agent_id": "code_manager",
+      "role": "code_manager",
+      "name": "CodeManager",
+      "enabled": true,
+      "llm_provider": "siliconflow",
+      "max_concurrent_tasks": 3,
+      "task_timeout": 300,
+      "supported_tasks": [
+        "code_analysis",
+        "dependency_analysis", 
+        "architecture_review",
+        "refactoring_suggestions"
+      ],
+      "tools": [
+        "filesystem",
+        "git",
+        "code_analysis",
+        "ast_parser"
+      ]
+    },
+    "compliance_auditor": {
+      "agent_id": "compliance_auditor",
+      "role": "compliance_auditor",
+      "name": "ComplianceAuditor",
+      "enabled": true,
+      "llm_provider": "siliconflow",
+      "max_concurrent_tasks": 2,
+      "task_timeout": 600,
+      "supported_tasks": [
+        "quality_check",
+        "security_scan",
+        "test_analysis",
+        "compliance_review"
+      ],
+      "tools": [
+        "filesystem",
+        "code_analysis",
+        "security_scanner",
+        "quality_checker"
+      ]
+    },
+    "system_architect": {
+      "agent_id": "system_architect",
+      "role": "system_architect",
+      "name": "SystemArchitect",
+      "enabled": false,
+      "llm_provider": "openai",
+      "max_concurrent_tasks": 1,
+      "task_timeout": 900,
+      "supported_tasks": [
+        "architecture_review",
+        "design_analysis",
+        "performance_analysis"
+      ],
+      "tools": [
+        "filesystem",
+        "git",
+        "architecture_analyzer"
+      ]
+    }
+  },
+  
+  "task_management": {
+    "max_concurrent_tasks": 10,
+    "default_task_timeout": 300,
+    "task_retry_attempts": 3,
+    "task_retry_delay": 5,
+    "cleanup_interval": 3600,
+    "max_history_size": 1000,
+    "priority_levels": {
+      "critical": 1,
+      "high": 2,
+      "normal": 5,
+      "low": 7
+    }
+  },
+  
+  "websocket": {
+    "host": "localhost",
+    "port": 8001,
+    "max_connections": 100,
+    "heartbeat_interval": 30,
+    "message_queue_size": 1000,
+    "auto_reconnect": true,
+    "reconnect_delay": 5
+  },
+  
+  "security": {
+    "enable_authentication": false,
+    "api_key_required": false,
+    "allowed_origins": ["*"],
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 100,
+      "burst_size": 20
+    },
+    "input_validation": {
+      "max_file_size": "10MB",
+      "allowed_file_types": [".py", ".js", ".ts", ".java", ".cpp", ".c", ".cs"],
+      "max_path_depth": 10
+    }
+  },
+  
+  "analysis": {
+    "default_exclude_patterns": [
+      "node_modules/**",
+      "**/*.min.js",
+      "**/__pycache__/**",
+      "**/venv/**",
+      "**/env/**",
+      "**/.git/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/*.pyc",
+      "**/*.pyo",
+      "**/*.egg-info/**"
+    ],
+    "max_file_size": "1MB",
+    "max_files_per_analysis": 100,
+    "supported_languages": [
+      "python",
+      "javascript",
+      "typescript",
+      "java",
+      "cpp",
+      "c",
+      "csharp"
+    ]
+  },
+  
+  "quality_rules": {
+    "python": {
+      "max_line_length": 120,
+      "max_function_length": 50,
+      "max_class_length": 500,
+      "max_complexity": 10,
+      "require_docstrings": true,
+      "enforce_type_hints": false
+    },
+    "javascript": {
+      "max_line_length": 120,
+      "max_function_length": 50,
+      "max_complexity": 10,
+      "require_jsdoc": false,
+      "enforce_strict_mode": true
+    }
+  },
+  
+  "security_rules": {
+    "scan_types": [
+      "sql_injection",
+      "xss_vulnerabilities",
+      "hardcoded_secrets",
+      "insecure_functions",
+      "path_traversal",
+      "command_injection"
+    ],
+    "severity_thresholds": {
+      "critical": ["sql_injection", "command_injection"],
+      "high": ["xss_vulnerabilities", "hardcoded_secrets"],
+      "medium": ["insecure_functions", "path_traversal"],
+      "low": ["weak_crypto", "information_disclosure"]
+    },
+    "secret_patterns": [
+      {
+        "name": "api_key",
+        "pattern": "(?i)(api[_-]?key|apikey)\\s*[:=]\\s*['\"]?([a-zA-Z0-9_-]{20,})['\"]?",
+        "severity": "high"
+      },
+      {
+        "name": "password",
+        "pattern": "(?i)(password|passwd|pwd)\\s*[:=]\\s*['\"]([^'\"\\s]{8,})['\"]",
+        "severity": "high"
+      },
+      {
+        "name": "private_key",
+        "pattern": "-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----",
+        "severity": "critical"
+      }
+    ]
+  },
+  
+  "monitoring": {
+    "enable_metrics": true,
+    "metrics_interval": 60,
+    "health_check_interval": 30,
+    "performance_tracking": {
+      "track_response_times": true,
+      "track_memory_usage": true,
+      "track_cpu_usage": true
+    },
+    "alerts": {
+      "high_error_rate_threshold": 0.1,
+      "high_response_time_threshold": 10.0,
+      "low_success_rate_threshold": 0.9
+    }
+  },
+  
+  "storage": {
+    "results_retention_days": 30,
+    "logs_retention_days": 7,
+    "cache_size_mb": 100,
+    "temp_dir": "/tmp/agentscope",
+    "results_dir": "./results",
+    "logs_dir": "./logs"
+  },
+  
+  "development": {
+    "auto_reload": true,
+    "debug_mode": false,
+    "mock_llm_responses": false,
+    "test_mode": false,
+    "profiling_enabled": false
+  }
+}

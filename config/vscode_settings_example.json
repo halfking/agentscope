@@ -1,0 +1,86 @@
+{
+  "agentscope.backend.host": "localhost",
+  "agentscope.backend.port": 8000,
+  "agentscope.backend.protocol": "http",
+  
+  "agentscope.agents.codeManager.enabled": true,
+  "agentscope.agents.complianceAuditor.enabled": true,
+  "agentscope.agents.systemArchitect.enabled": false,
+  
+  "agentscope.llm.provider": "openai",
+  "agentscope.llm.model": "gpt-4",
+  
+  "agentscope.analysis.autoRun": false,
+  "agentscope.analysis.excludePatterns": [
+    "node_modules/**",
+    "**/*.min.js",
+    "**/__pycache__/**",
+    "**/venv/**",
+    "**/env/**",
+    "**/.git/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/*.pyc",
+    "**/*.pyo",
+    "**/*.egg-info/**",
+    "**/coverage/**",
+    "**/.pytest_cache/**",
+    "**/.mypy_cache/**"
+  ],
+  
+  "agentscope.notifications.level": "info",
+  "agentscope.dashboard.autoOpen": true,
+  
+  "agentscope.security.enableSandbox": true,
+  "agentscope.performance.maxConcurrentTasks": 5,
+  "agentscope.development.debugMode": false,
+  
+  "agentscope.quality.rules": {
+    "python": {
+      "maxLineLength": 120,
+      "maxFunctionLength": 50,
+      "maxComplexity": 10,
+      "requireDocstrings": true,
+      "enforceTypeHints": false
+    },
+    "javascript": {
+      "maxLineLength": 120,
+      "maxFunctionLength": 50,
+      "maxComplexity": 10,
+      "requireJSDoc": false,
+      "enforceStrictMode": true
+    },
+    "typescript": {
+      "maxLineLength": 120,
+      "maxFunctionLength": 50,
+      "maxComplexity": 10,
+      "requireJSDoc": false,
+      "enforceStrictTypes": true
+    }
+  },
+  
+  "agentscope.security.scanTypes": [
+    "sql_injection",
+    "xss_vulnerabilities",
+    "hardcoded_secrets",
+    "insecure_functions",
+    "path_traversal",
+    "command_injection"
+  ],
+  
+  "agentscope.testing.frameworks": [
+    "pytest",
+    "unittest",
+    "jest",
+    "mocha",
+    "junit"
+  ],
+  
+  "agentscope.ui.theme": "dark",
+  "agentscope.ui.showWelcome": true,
+  "agentscope.ui.compactMode": false,
+  
+  "agentscope.workspace.autoSave": true,
+  "agentscope.workspace.backupResults": true,
+  "agentscope.workspace.resultRetentionDays": 30
+}

@@ -1,0 +1,332 @@
+{
+  "mcp_servers": {
+    "filesystem": {
+      "name": "filesystem",
+      "description": "File system operations for reading, writing, and managing files",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./workspace"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "enabled": true,
+      "auto_start": true,
+      "transport": "stdio",
+      "timeout": 30,
+      "retry_attempts": 3,
+      "tools": [
+        "read_file",
+        "write_file",
+        "create_directory",
+        "list_directory",
+        "move_file",
+        "delete_file",
+        "get_file_info"
+      ]
+    },
+    
+    "git": {
+      "name": "git",
+      "description": "Git version control operations",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "enabled": true,
+      "auto_start": true,
+      "transport": "stdio",
+      "timeout": 60,
+      "retry_attempts": 3,
+      "tools": [
+        "git_status",
+        "git_log",
+        "git_diff",
+        "git_blame",
+        "git_show",
+        "git_branch",
+        "git_commit_info"
+      ]
+    },
+    
+    "brave_search": {
+      "name": "brave_search",
+      "description": "Web search capabilities using Brave Search API",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}",
+        "NODE_ENV": "production"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 30,
+      "retry_attempts": 3,
+      "tools": [
+        "brave_web_search",
+        "brave_local_search"
+      ]
+    },
+    
+    "code_analysis": {
+      "name": "code_analysis",
+      "description": "Advanced code analysis and AST parsing tools",
+      "command": "python",
+      "args": ["-m", "agentscope_integration.mcp.servers.code_analysis_server"],
+      "env": {
+        "PYTHONPATH": ".",
+        "AGENTSCOPE_LOG_LEVEL": "INFO"
+      },
+      "enabled": true,
+      "auto_start": true,
+      "transport": "stdio",
+      "timeout": 120,
+      "retry_attempts": 3,
+      "tools": [
+        "parse_python_ast",
+        "analyze_code_quality",
+        "detect_security_issues",
+        "extract_dependencies",
+        "calculate_metrics",
+        "find_code_patterns",
+        "generate_call_graph"
+      ]
+    },
+    
+    "database": {
+      "name": "database",
+      "description": "Database operations and queries",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sqlite"],
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 60,
+      "retry_attempts": 3,
+      "tools": [
+        "execute_query",
+        "describe_table",
+        "list_tables",
+        "create_table",
+        "insert_data",
+        "update_data",
+        "delete_data"
+      ]
+    },
+    
+    "docker": {
+      "name": "docker",
+      "description": "Docker container management",
+      "command": "python",
+      "args": ["-m", "agentscope_integration.mcp.servers.docker_server"],
+      "env": {
+        "PYTHONPATH": ".",
+        "DOCKER_HOST": "unix:///var/run/docker.sock"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 120,
+      "retry_attempts": 3,
+      "tools": [
+        "list_containers",
+        "create_container",
+        "start_container",
+        "stop_container",
+        "remove_container",
+        "execute_command",
+        "get_logs"
+      ]
+    },
+    
+    "kubernetes": {
+      "name": "kubernetes",
+      "description": "Kubernetes cluster management",
+      "command": "python",
+      "args": ["-m", "agentscope_integration.mcp.servers.k8s_server"],
+      "env": {
+        "PYTHONPATH": ".",
+        "KUBECONFIG": "${KUBECONFIG}"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 180,
+      "retry_attempts": 3,
+      "tools": [
+        "list_pods",
+        "get_pod_logs",
+        "describe_resource",
+        "apply_manifest",
+        "delete_resource",
+        "port_forward",
+        "exec_pod_command"
+      ]
+    },
+    
+    "aws": {
+      "name": "aws",
+      "description": "AWS cloud services integration",
+      "command": "python",
+      "args": ["-m", "agentscope_integration.mcp.servers.aws_server"],
+      "env": {
+        "PYTHONPATH": ".",
+        "AWS_ACCESS_KEY_ID": "${AWS_ACCESS_KEY_ID}",
+        "AWS_SECRET_ACCESS_KEY": "${AWS_SECRET_ACCESS_KEY}",
+        "AWS_DEFAULT_REGION": "${AWS_DEFAULT_REGION}"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 120,
+      "retry_attempts": 3,
+      "tools": [
+        "list_s3_buckets",
+        "upload_to_s3",
+        "download_from_s3",
+        "list_ec2_instances",
+        "describe_lambda_functions",
+        "invoke_lambda",
+        "get_cloudwatch_metrics"
+      ]
+    },
+    
+    "monitoring": {
+      "name": "monitoring",
+      "description": "System monitoring and metrics collection",
+      "command": "python",
+      "args": ["-m", "agentscope_integration.mcp.servers.monitoring_server"],
+      "env": {
+        "PYTHONPATH": ".",
+        "PROMETHEUS_URL": "${PROMETHEUS_URL}",
+        "GRAFANA_URL": "${GRAFANA_URL}"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 60,
+      "retry_attempts": 3,
+      "tools": [
+        "get_system_metrics",
+        "query_prometheus",
+        "create_alert",
+        "get_service_health",
+        "collect_logs",
+        "analyze_performance"
+      ]
+    },
+    
+    "testing": {
+      "name": "testing",
+      "description": "Automated testing and test execution",
+      "command": "python",
+      "args": ["-m", "agentscope_integration.mcp.servers.testing_server"],
+      "env": {
+        "PYTHONPATH": ".",
+        "TEST_ENVIRONMENT": "development"
+      },
+      "enabled": false,
+      "auto_start": false,
+      "transport": "stdio",
+      "timeout": 300,
+      "retry_attempts": 3,
+      "tools": [
+        "run_tests",
+        "generate_test_report",
+        "analyze_coverage",
+        "run_performance_tests",
+        "validate_api",
+        "check_dependencies"
+      ]
+    }
+  },
+  
+  "global_settings": {
+    "max_concurrent_servers": 10,
+    "default_timeout": 60,
+    "default_retry_attempts": 3,
+    "health_check_interval": 30,
+    "auto_restart_failed_servers": true,
+    "log_level": "INFO",
+    "enable_metrics": true
+  },
+  
+  "server_groups": {
+    "core": {
+      "description": "Essential servers for basic functionality",
+      "servers": ["filesystem", "git"],
+      "auto_start": true,
+      "priority": 1
+    },
+    
+    "analysis": {
+      "description": "Code analysis and quality checking servers",
+      "servers": ["code_analysis"],
+      "auto_start": true,
+      "priority": 2
+    },
+    
+    "cloud": {
+      "description": "Cloud services integration",
+      "servers": ["aws", "docker", "kubernetes"],
+      "auto_start": false,
+      "priority": 3
+    },
+    
+    "utilities": {
+      "description": "Additional utility servers",
+      "servers": ["brave_search", "database", "monitoring", "testing"],
+      "auto_start": false,
+      "priority": 4
+    }
+  },
+  
+  "security": {
+    "enable_sandbox": true,
+    "allowed_commands": [
+      "npx",
+      "python",
+      "node",
+      "git",
+      "docker",
+      "kubectl"
+    ],
+    "blocked_commands": [
+      "rm",
+      "sudo",
+      "chmod",
+      "chown",
+      "passwd"
+    ],
+    "environment_isolation": true,
+    "resource_limits": {
+      "max_memory_mb": 512,
+      "max_cpu_percent": 50,
+      "max_execution_time": 300
+    }
+  },
+  
+  "monitoring": {
+    "enable_health_checks": true,
+    "health_check_interval": 30,
+    "performance_monitoring": true,
+    "log_server_communications": false,
+    "metrics_collection": {
+      "response_times": true,
+      "error_rates": true,
+      "resource_usage": true,
+      "tool_usage_stats": true
+    }
+  },
+  
+  "development": {
+    "debug_mode": false,
+    "verbose_logging": false,
+    "mock_servers": false,
+    "test_mode": false,
+    "auto_reload_on_change": true
+  }
+}

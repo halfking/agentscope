@@ -136,3 +136,7 @@ dmypy.json
 # docs
 docs/tutorial/en/build/
 docs/tutorial/zh_CN/build/
+
+# .env.example 同样不入库：本地这份曾写入真实 API key，
+# 即使改成占位符也不入库，避免后续再次被填入实值后误提交。
+.env.example
